@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "melanc-api"
+version = "0.1.0"
+description = ""
+authors = ["Dean <qlqldldh@fadutec.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.63.0"
+uvicorn = "^0.13.4"
+psycopg2-binary = "^2.8.6"
+SQLAlchemy = "^1.4.13"
+fastapi-utils = "^0.2.1"
+celery = "^5.0.5"
+gunicorn = "^20.1.0"
+python-dotenv = "^0.17.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.4"
+black = "^21.5b0"
+ipython = "^7.23.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
