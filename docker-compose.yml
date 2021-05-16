@@ -10,7 +10,7 @@ services:
             - PGDATA=/var/lib/postgresql/data/pgdata
             - POSTGRES_USER=dean
             - POSTGRES_PASSWORD=dean
-            - POSTGRES_DB=dev
+            - POSTGRES_DB=melanc_development
 
 volumes:
     postgres_data:
