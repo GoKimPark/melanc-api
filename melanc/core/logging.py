@@ -6,7 +6,9 @@ LOGGING = {
     "version": 1,
     "disabled_existing_loggers": False,
     "formatters": {
-        "standard": {"format": "%(asctime)s - %(module)s - %(levelname)s - %(message)s"},
+        "standard": {
+            "format": "%(asctime)s - %(module)s - %(levelname)s - %(message)s"
+        },
     },
     "handlers": {
         "default": {
