@@ -1,4 +1,4 @@
-from melanc.api.diaries import models, schemas
+from melanc.apps.diaries import models, schemas
 from melanc.core.db import db_session
 from melanc.utils.singleton import Singleton
 
