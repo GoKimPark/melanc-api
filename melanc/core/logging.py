@@ -1,6 +1,6 @@
 import os
 import logging.config
-from melanc.core.config import ROOT_PATH, STAGE
+from melanc.config import ROOT_PATH, STAGE
 
 LOGGING = {
     "version": 1,
