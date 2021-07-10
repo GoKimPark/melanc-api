@@ -20,11 +20,15 @@ class DiaryViewSet:
         diary = db.query(models.Diary).get(diary_id)
 
         if not diary:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found.")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Not found."
+            )
 
         return diary
 
-    @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.DiaryCreate)
+    @router.post(
+        "/", status_code=status.HTTP_201_CREATED, response_model=schemas.DiaryCreate
+    )
     def create(self, diary_data: schemas.DiaryCreate, db: db_session = Depends(get_db)):
         diary = models.Diary(**diary_data.dict())
         db.add(diary)
@@ -33,11 +37,18 @@ class DiaryViewSet:
         return diary
 
     @router.put("/{diary_id}", response_model=schemas.DiaryBase)
-    def update(self, diary_id: int, diary_data: schemas.DiaryBase, db: db_session = Depends(get_db)):
+    def update(
+        self,
+        diary_id: int,
+        diary_data: schemas.DiaryBase,
+        db: db_session = Depends(get_db),
+    ):
         query_diary = db.query(models.Diary).filter_by(id=diary_id)
 
         if query_diary.count() == 0:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found.")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Not found."
+            )
 
         query_diary.update(diary_data.dict())
         query_diary.commit()
@@ -49,7 +60,9 @@ class DiaryViewSet:
         diary = db.query(models.Diary).get(diary_id)
 
         if not diary:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found.")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Not found."
+            )
 
         db.delete(diary)
         db.commit()

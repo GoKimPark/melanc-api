@@ -25,7 +25,9 @@ class UserViewSet:
         user = db.query(models.User).get(user_id)
 
         if not user:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found.")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Not found."
+            )
 
         return user
 
@@ -35,8 +37,12 @@ class UserViewSet:
 
         return user.diaries
 
-    @router.post("/", status_code=status.HTTP_201_CREATED, response_model=user_schemas.UserCreate)
-    def create(self, user_data: user_schemas.UserCreate, db: db_session = Depends(get_db)):
+    @router.post(
+        "/", status_code=status.HTTP_201_CREATED, response_model=user_schemas.UserCreate
+    )
+    def create(
+        self, user_data: user_schemas.UserCreate, db: db_session = Depends(get_db)
+    ):
         user = models.User(**user_data.dict())
         db.add(user)
         db.commit()
@@ -44,11 +50,18 @@ class UserViewSet:
         return user_data
 
     @router.put("/{user_id}", response_model=user_schemas.UserBase)
-    def update(self, user_id: int, user_data: user_schemas.UserBase, db: db_session = Depends(get_db)):
+    def update(
+        self,
+        user_id: int,
+        user_data: user_schemas.UserBase,
+        db: db_session = Depends(get_db),
+    ):
         query_user = db.query(models.User).filter_by(id=user_id)
 
         if query_user.count() == 0:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found.")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Not found."
+            )
 
         query_user.update(user_data.dict())
         db.commit()
@@ -60,6 +73,8 @@ class UserViewSet:
         query_user = db.query(models.User).filter_by(id=user_id)
 
         if query_user.count() == 0:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found.")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Not found."
+            )
 
         db.commit()
