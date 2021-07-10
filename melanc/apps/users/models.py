@@ -1,10 +1,16 @@
+import enum
 from datetime import datetime
 
 from sqlalchemy import Column, Integer, String, DateTime, Enum
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
 from melanc.core.db import Base
-from melanc.utils.enums import Gender
+
+
+class Gender(enum.Enum):
+    FEMALE = "female"
+    MALE = "male"
 
 
 class User(Base):
@@ -14,13 +20,13 @@ class User(Base):
     deleted = Column(DateTime, default=None, nullable=True)
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, onupdate=func.now())
-    username = Column(String, nullable=False)
-    password = Column(String, nullable=False)
-    first_name = Column(String, nullable=False)
-    last_name = Column(String, nullable=False)
-    email = Column(String, nullable=True)
+    username = Column(String)
+    password = Column(String)
+    first_name = Column(String)
+    last_name = Column(String)
+    email = Column(String, nullable=True, unique=True)
     gender = Column(Enum(Gender))
-    age = Column(Integer, nullable=False)
+    age = Column(Integer)
     last_login = Column(DateTime, default=datetime.now())
 
-    # diaries = relationship("Diary", back_populates="user")
+    diaries = relationship("Diary", back_populates="user")

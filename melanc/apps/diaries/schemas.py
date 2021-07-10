@@ -1,23 +1,23 @@
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, validator
 from datetime import datetime
 
-from melanc.utils.enums import Weather, Feeling
+from melanc.apps.diaries.models import Weather, Feeling
 
 
 class DiaryBase(BaseModel):
     user_id: int
-    title: str = Field(max_length=100)
-    weather: str
-    feeling: str
+    title: str
+    weather: Weather
+    feeling: Feeling
     content: str
 
-    @validator("weather")
-    def validate_weather(cls, value):
-        assert value in [weather.value for weather in Weather]
+    @validator("title")
+    def validate_title(cls, title):
+        assert len(title) <= 100, "cannot exceed max length (100 chars)"
+        return title
 
-    @validator("feeling")
-    def validate_feeling(cls, value):
-        assert value in [feeling.value for feeling in Feeling]
+    class Config:
+        orm_mode = True
 
 
 class DiaryCreate(DiaryBase):
@@ -26,9 +26,6 @@ class DiaryCreate(DiaryBase):
 
 class Diary(DiaryBase):
     id: int
-    deleted: datetime = None
     created_at: datetime
-    updated_at: datetime
-
-    class Config:
-        orm_mode = True
+    updated_at: datetime = None
+    deleted: datetime = None
